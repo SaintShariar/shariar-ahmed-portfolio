@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
   --bg: #0d1117;
@@ -136,7 +136,7 @@ button {
   margin-bottom: 24px;
 }
 
-/* Secondary affiliation strip — quiet under the Chameleon hero */
+/* Secondary affiliation strip â€” quiet under the Chameleon hero */
 .welcome__affiliations {
   display: grid;
   gap: 14px;
@@ -1085,4 +1085,18 @@ button {
   color: white;
   border-radius: 8px;
   font-weight: 500;
+}
+
+.welcome__edu-primary {
+  margin-bottom: 0.75rem;
+}
+.welcome__wgu-owl {
+  border-radius: 50%;
+  object-fit: cover;
+  background: #003B5C;
+}
+.welcome__edu .welcome__edu-degree {
+  margin: 0.15rem 0;
+  font-size: 0.92rem;
+  font-weight: 600;
 }

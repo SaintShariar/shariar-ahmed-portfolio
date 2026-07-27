@@ -1,0 +1,20 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Western Governors University owl">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A4A6E"/>
+      <stop offset="100%" stop-color="#003B5C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="url(#g)"/>
+  <ellipse cx="64" cy="72" rx="38" ry="34" fill="#F5F7FA"/>
+  <circle cx="46" cy="58" r="16" fill="#F5F7FA"/>
+  <circle cx="82" cy="58" r="16" fill="#F5F7FA"/>
+  <circle cx="46" cy="58" r="10" fill="#003B5C"/>
+  <circle cx="82" cy="58" r="10" fill="#003B5C"/>
+  <circle cx="49" cy="55" r="3.5" fill="#F7C948"/>
+  <circle cx="85" cy="55" r="3.5" fill="#F7C948"/>
+  <path d="M64 68 L74 78 L64 74 L54 78 Z" fill="#F7C948"/>
+  <path d="M40 88 Q64 102 88 88" fill="none" stroke="#003B5C" stroke-width="3" stroke-linecap="round"/>
+  <path d="M52 40 Q64 28 76 40" fill="none" stroke="#F7C948" stroke-width="4" stroke-linecap="round"/>
+  <text x="64" y="118" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#F7C948">WGU</text>
+</svg>

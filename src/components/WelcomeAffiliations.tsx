@@ -1,14 +1,9 @@
-/**
+﻿/**
  * Secondary affiliation strip for the welcome screen.
- * Logos live in public/logos/ — replace SVGs with official assets when available.
+ * Logos live in public/logos/.
  */
 
 const EDUCATION_LOGOS = [
-  {
-    src: "/logos/wgu.svg",
-    alt: "Western Governors University",
-    label: "WGU",
-  },
   {
     src: "/logos/ub.svg",
     alt: "University at Buffalo",
@@ -30,30 +25,44 @@ export function WelcomeAffiliations() {
           <img
             src="/logos/lions-international.svg"
             alt="Lions Clubs International"
-            title="Lions Clubs International (placeholder — replace public/logos/lions-international.svg with official emblem)"
+            title="Lions Clubs International"
             className="welcome__exp-avatar"
             width={40}
             height={40}
           />
           <div className="welcome__exp-text">
             <p className="welcome__exp-org">Lions International</p>
-            <p className="welcome__exp-meta">Volunteer · most recent</p>
+            <p className="welcome__exp-meta">Volunteer — most recent</p>
           </div>
         </div>
       </div>
 
       <div className="welcome__edu" aria-label="Education">
         <span className="welcome__affil-label">Education</span>
-        <p className="welcome__edu-degree">
-          B.S. Information Technology — Western Governors University
-        </p>
+        <div className="welcome__exp-row welcome__edu-primary">
+          <img
+            src="/logos/wgu-owl.svg"
+            alt="Western Governors University owl"
+            title="Western Governors University"
+            className="welcome__exp-avatar welcome__wgu-owl"
+            width={48}
+            height={48}
+          />
+          <div className="welcome__exp-text">
+            <p className="welcome__exp-org">Western Governors University</p>
+            <p className="welcome__edu-degree">
+              Bachelor of Science, Information Technology
+            </p>
+            <p className="welcome__exp-meta">2025–2027</p>
+          </div>
+        </div>
         <ul className="welcome__logo-row">
           {EDUCATION_LOGOS.map((logo) => (
             <li key={logo.src}>
               <img
                 src={logo.src}
                 alt={logo.alt}
-                title={`${logo.alt} (placeholder — replace public/logos file with official SVG)`}
+                title={logo.alt}
                 className="welcome__logo-mark"
                 width={logo.src.includes("buffalo") ? 100 : 72}
                 height={20}
