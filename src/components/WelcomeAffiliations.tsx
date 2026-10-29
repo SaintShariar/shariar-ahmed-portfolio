@@ -18,21 +18,39 @@ const EDUCATION_LOGOS = [
 
 export function WelcomeAffiliations() {
   return (
-    <aside className="welcome__affiliations" aria-label="Volunteer work and education">
+    <aside className="welcome__affiliations" aria-label="Work experience, volunteer work, and education">
       <div className="welcome__exp">
-        <span className="welcome__affil-label">Volunteer</span>
-        <div className="welcome__exp-row">
-          <img
-            src="/logos/lions-international.svg"
-            alt="Lions Clubs International"
-            title="Lions Clubs International"
-            className="welcome__exp-avatar"
-            width={40}
-            height={40}
-          />
-          <div className="welcome__exp-text">
-            <p className="welcome__exp-org">Lions International</p>
-            <p className="welcome__exp-meta">Volunteer — most recent</p>
+        <span className="welcome__affil-label">Experience</span>
+        <div className="welcome__exp-list">
+          <div className="welcome__exp-row">
+            <img
+              src="/logos/canvass-america.png"
+              alt="Canvass America"
+              title="Canvass America"
+              className="welcome__exp-avatar"
+              width={40}
+              height={40}
+            />
+            <div className="welcome__exp-text">
+              <p className="welcome__exp-org">Canvass America</p>
+              <p className="welcome__exp-meta">
+                Political Canvasser · Jan 2024–Dec 2024
+              </p>
+            </div>
+          </div>
+          <div className="welcome__exp-row">
+            <img
+              src="/logos/lions-international.svg"
+              alt="Lions Clubs International"
+              title="Lions Clubs International"
+              className="welcome__exp-avatar"
+              width={40}
+              height={40}
+            />
+            <div className="welcome__exp-text">
+              <p className="welcome__exp-org">Lions International</p>
+              <p className="welcome__exp-meta">Volunteer — most recent</p>
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import type { GraphData } from "@/types";
 interface GraphGlobeProps {
   data: GraphData;
   onNodeClick?: (id: string) => void;
+  /** Atmosphere mode for the welcome screen — hide vault chrome */
+  decorative?: boolean;
 }
 
 const GROUP_COLORS: Record<string, string> = {
@@ -15,7 +17,7 @@ const GROUP_COLORS: Record<string, string> = {
 
 const LARGE_VAULT = 500;
 
-function GraphGlobeInner({ data, onNodeClick }: GraphGlobeProps) {
+function GraphGlobeInner({ data, onNodeClick, decorative }: GraphGlobeProps) {
   const isLarge = data.nodes.length > LARGE_VAULT;
 
   const graphData = useMemo(
@@ -30,9 +32,9 @@ function GraphGlobeInner({ data, onNodeClick }: GraphGlobeProps) {
   );
 
   return (
-    <div className="graph-globe">
+    <div className={`graph-globe${decorative ? " graph-globe--decorative" : ""}`}>
       <div className="graph-globe__glow" />
-      {isLarge && (
+      {!decorative && isLarge && (
         <div className="graph-globe__badge">
           Large vault — particles reduced for speed
         </div>
@@ -51,12 +53,15 @@ function GraphGlobeInner({ data, onNodeClick }: GraphGlobeProps) {
         linkDirectionalParticleWidth={1.2}
         linkDirectionalParticleColor={() => "#58a6ff"}
         onNodeClick={(node) => onNodeClick?.((node as { id: string }).id)}
-        enableNodeDrag
+        enableNodeDrag={!decorative}
+        enableNavigationControls
         showNavInfo={false}
       />
-      <div className="graph-globe__hint">
-        Drag nodes · Scroll to zoom · Click to open note
-      </div>
+      {!decorative && (
+        <div className="graph-globe__hint">
+          Drag nodes · Scroll to zoom · Click to open note
+        </div>
+      )}
     </div>
   );
 }

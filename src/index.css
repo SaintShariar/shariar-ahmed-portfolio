@@ -91,17 +91,34 @@ button {
 }
 
 .welcome {
+  position: relative;
+  isolation: isolate;
   height: 100%;
   display: grid;
   place-items: center;
   padding: 24px 16px;
+  overflow: auto;
   background:
     radial-gradient(circle at 20% 20%, rgba(88, 166, 255, 0.12), transparent 40%),
     radial-gradient(circle at 80% 80%, rgba(63, 185, 80, 0.08), transparent 40%),
     var(--bg);
 }
 
+.welcome__globe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.welcome__globe .graph-globe {
+  height: 100%;
+}
+
 .welcome__stack {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -112,9 +129,10 @@ button {
 .welcome__card {
   text-align: center;
   padding: 48px 40px 40px;
-  background: var(--bg-elevated);
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
   border: 1px solid var(--border);
   border-radius: 20px;
+  backdrop-filter: blur(10px);
 }
 
 .welcome__logo {
@@ -127,23 +145,25 @@ button {
   font-size: 2rem;
   background: linear-gradient(135deg, var(--accent), var(--green));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .welcome__card p {
   color: var(--text-muted);
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
-/* Secondary affiliation strip â€” quiet under the Chameleon hero */
+/* Secondary affiliation strip — quiet under the hero */
 .welcome__affiliations {
   display: grid;
   gap: 14px;
   padding: 16px 18px;
   border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+  background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
+  backdrop-filter: blur(10px);
 }
 
 .welcome__affil-label {
@@ -154,6 +174,12 @@ button {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.welcome__exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .welcome__exp-row {

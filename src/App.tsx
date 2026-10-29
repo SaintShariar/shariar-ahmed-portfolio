@@ -9,7 +9,6 @@
 import { listen } from "@tauri-apps/api/event";
 import {
   Calendar,
-  FolderOpen,
   Globe,
   Menu,
   Puzzle,
@@ -23,7 +22,6 @@ import {
   createNote,
   installPluginFromGitHub,
   listVaultFiles,
-  pickVault,
   readNote,
   updateGraphForNote,
   writeNote,
@@ -45,11 +43,45 @@ import { Sidebar } from "@/components/Sidebar";
 import { Editor } from "@/components/Editor";
 import { CommentsPanel, FloatingAI } from "@/components/CommentsPanel";
 import { Toast, SyncConflictDialog } from "@/components/Toast";
-import type { Comment, PluginInfo, VaultChangeEvent } from "@/types";
+import type {
+  Comment,
+  GraphData,
+  PluginInfo,
+  VaultChangeEvent,
+} from "@/types";
 
 const GraphGlobe = lazy(() =>
   import("@/components/GraphGlobe").then((m) => ({ default: m.GraphGlobe })),
 );
+
+/** Demo graph so the welcome screen still shows the 3D globe without a vault. */
+const WELCOME_GRAPH: GraphData = {
+  nodes: [
+    { id: "shariar", label: "Shariar Ahmed", group: "note" },
+    { id: "canvass", label: "Canvass America", group: "note" },
+    { id: "lions", label: "Lions International", group: "note" },
+    { id: "wgu", label: "WGU", group: "note" },
+    { id: "ub", label: "UB", group: "note" },
+    { id: "buff-state", label: "Buffalo State", group: "note" },
+    { id: "tag:work", label: "#work", group: "tag" },
+    { id: "tag:volunteer", label: "#volunteer", group: "tag" },
+    { id: "tag:education", label: "#education", group: "tag" },
+    { id: "tag:it", label: "#IT", group: "tag" },
+  ],
+  links: [
+    { source: "shariar", target: "canvass" },
+    { source: "shariar", target: "lions" },
+    { source: "shariar", target: "wgu" },
+    { source: "shariar", target: "ub" },
+    { source: "shariar", target: "buff-state" },
+    { source: "canvass", target: "tag:work" },
+    { source: "lions", target: "tag:volunteer" },
+    { source: "wgu", target: "tag:education" },
+    { source: "wgu", target: "tag:it" },
+    { source: "ub", target: "tag:education" },
+    { source: "buff-state", target: "tag:education" },
+  ],
+};
 const CalendarView = lazy(() =>
   import("@/components/CalendarView").then((m) => ({
     default: m.CalendarView,
@@ -86,7 +118,6 @@ export function App() {
   const isDirty = useAppStore((s) => s.isDirty);
   const isSaving = useAppStore((s) => s.isSaving);
 
-  const setVaultPath = useAppStore((s) => s.setVaultPath);
   const setFiles = useAppStore((s) => s.setFiles);
   const setActiveNote = useAppStore((s) => s.setActiveNote);
   const setNoteContent = useAppStore((s) => s.setNoteContent);
@@ -261,13 +292,6 @@ export function App() {
     showToast,
   ]);
 
-  async function handleOpenVault() {
-    const path = await pickVault();
-    if (!path) return;
-    setVaultPath(path);
-    await loadVaultData(path);
-  }
-
   async function handleSelectNote(path: string) {
     if (!vaultPath) return;
     const content = await readNote(vaultPath, path);
@@ -371,18 +395,20 @@ export function App() {
   if (!vaultPath) {
     return (
       <div className="welcome">
+        <div className="welcome__globe" aria-hidden="true">
+          <Suspense fallback={null}>
+            <GraphGlobe data={WELCOME_GRAPH} decorative />
+          </Suspense>
+        </div>
         <div className="welcome__stack">
           <div className="welcome__card">
             <div className="welcome__logo">SA</div>
             <h1>Shariar Ahmed</h1>
             <p>
-              Portfolio website — volunteer with Lions International, pursuing a BS in IT at WGU,
-              with education ties to UB and Buffalo State.
+              Political Canvasser at Canvass America · Volunteer with Lions
+              International · BS Information Technology at WGU · ties to UB and
+              Buffalo State.
             </p>
-            <button type="button" className="btn-primary" onClick={handleOpenVault}>
-              <FolderOpen size={18} />
-              Open Vault
-            </button>
           </div>
           <WelcomeAffiliations />
         </div>
@@ -402,8 +428,8 @@ export function App() {
         </button>
         <span className="toolbar__title">
           {activeNote?.replace(/\.md$/, "") ?? "Shariar Ahmed Portfolio"}
-          {isDirty && " â€¢"}
-          {isSaving && " Savingâ€¦"}
+          {isDirty && " •"}
+          {isSaving && " Saving…"}
         </span>
         <nav className="toolbar__nav">
           <button
@@ -468,7 +494,7 @@ export function App() {
         )}
 
         <main className="main-pane">
-          <Suspense fallback={<div className="view-loading">Loadingâ€¦</div>}>
+          <Suspense fallback={<div className="view-loading">Loading…</div>}>
             {view === "editor" && (
               <div className="editor-layout">
                 <Editor
@@ -566,7 +592,7 @@ function generateAiResponse(
   const lower = prompt.toLowerCase();
   if (lower.includes("summarize") && noteContent) {
     const lines = noteContent.split("\n").filter(Boolean);
-    return `Summary of "${activeNote?.replace(/\.md$/, "")}": ${lines.slice(0, 3).join(" ").slice(0, 200)}â€¦`;
+    return `Summary of "${activeNote?.replace(/\.md$/, "")}": ${lines.slice(0, 3).join(" ").slice(0, 200)}…`;
   }
   if (lower.includes("link") || lower.includes("connect")) {
     const links = [...noteContent.matchAll(/\[\[([^\]|]+)/g)].map((m) => m[1]);
